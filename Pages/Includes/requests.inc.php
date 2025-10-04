@@ -3,8 +3,50 @@
 <?php
 // Define connString pointer to link.db
 define('connString','sqlite:./database/link.db');
-// connection 
-class linkDB {
-    private static $baseSQL = "SELECT * FROM "
+// connection class 
+class dataLink {
+    public static function createConnection () {
+        $pdo = new PDO(connString);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE,
+                            PDO::ERRMODE_EXCEPTION);
+        $pdo->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE,
+                            PDO::FETCH_ASSOC);
+        return $pdo;
+    }
+// stolen from Web 2 labs
+    public static function runQuery($connection, $sql, $params){
+        $statement = null;
+        if (isset($params)){
+            if (!is_array($params)) {
+                $params = array($params);
+            }
+            $statement = $connection->prepare($sql);
+            $executedOK = $statement->execute($params);
+            if (!$executedOK) throw new PDOException;
+        }
+        return $statement;
+    }
+
 }
+class user {
+    private static $baseStatement = "SELECT * FROM users";
+    public function __construct(){
+        $this->$pdo($connString);
+    }
+    // return all users as an array
+    public function getAll() {
+        $sql = self::$baseStatement;
+        $statement = dataLink::runQuery($this->pdo, $sql, null);
+        return $statement->fetchAll();
+    }
+    public function loginUser($userName, $password) {
+        $sql = self::$baseStatement . "WHERE userName=" . $userName;
+        $statement = dataLink::runQuery($this->pdo, $sql, null);
+        $result = $statement->fetch();
+        if ($password == $result['userPassword']){
+            
+        }
+    }
+}
+
 ?>
