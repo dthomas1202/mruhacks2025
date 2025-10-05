@@ -178,6 +178,17 @@ public function checkPwd($name, $password){
             return ["error" => $e->getMessage()];
         }
     }
+    public function destroySession($sessionid){
+        
+        try {  
+            $stmt = $this->pdo->prepare("DELETE FROM activeSessions WHERE sessionID = :id");
+            $stmt ->execute([':id'=> intval($sessionid)]);
+            return ['success' => stmt->rowCount() >0];
+        } catch (PDOEXCEPTION $e) {
+            return ["error"=> $e->getMessage()];
+
+        }
+    }
     /* Get group information as 2d ASSOC array
     * input required groupID
     * searches groups table for matching ID, and returns
