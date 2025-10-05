@@ -202,11 +202,11 @@ function querySessionInfo(id) {
 
         trafficTxt = jsonResponse["traffic"]
         if (trafficTxt == 0) {
-            sTraffic.innerHTML = "<span class='trafficRed'></span> - LOCKED IN"
+            sTraffic.innerHTML = "<div class='trafficRed'></div><br>LOCKED IN"
         } else if (trafficTxt == 1) {
-            sTraffic.innerHTML = "<span class='trafficYellow'></span> - Chat and Work"
+            sTraffic.innerHTML = "<div class='trafficYellow'></div><br>Chat and Work"
         } else {
-            sTraffic.innerHTML = "<span class='trafficGreen'></span> - Yap Session"
+            sTraffic.innerHTML = "<div class='trafficGreen'></div><br>Yap Session"
         }
 
         var req2 = new XMLHttpRequest();

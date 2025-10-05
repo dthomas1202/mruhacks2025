@@ -64,11 +64,11 @@ if (!isset($currentSession)) {
                 </div> -->
             </div>
             <div id="sidebarInfo">
-                <p id="infoUser">Username</p>
-                <p id="infoSubject">Subject</p>
-                <p id="infoTime">Time</p>
+                <p>Username: <span id="infoUser">Username</span></p>
+                <p>Subject: <span id="infoSubject">Subject</span></p>
+                <p>Time: <span id="infoTime">Time</span></p>
                 <p id="infoTraffic"><span class="trafficRed"></span> - Locked In</p>
-                <p id="infoDesc">Description</p>
+                <p>Description: <span id="infoDesc">Description</span></p>
                 <form action="api/modSession.php" method="post">
                     <input type="hidden" id="sessionModEdit" name="edit" value="">
                     <input type="hidden" id="sessionModId" name="id" value="">
