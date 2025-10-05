@@ -1,6 +1,6 @@
 <?php
 require("../include/linkDB.php");
-$dbPath = '../include/link.db';
+$dbPath = '../../database/link.db';
 $db = new linkDB($dbPath);
 
 $sessionList = $db->getSession();
@@ -20,5 +20,5 @@ if (isset($_GET["loc"])) {
 }
 
 
-json_encode($newSessionList);
+echo json_encode($newSessionList);
 ?>

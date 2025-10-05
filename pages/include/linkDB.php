@@ -162,11 +162,11 @@ if ($action === 'create') {
     public function getSession($id = null) {
         try {
             if ($id !== null) {
-                $stmt = $this->pdo->prepare("SELECT * FROM activeSessions WHERE id = :id");
+                $stmt = $this->pdo->prepare("SELECT * FROM activeSessions WHERE sessionID = :id");
                 $stmt->execute([':id' => intval($id)]);
                 return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
             } else {
-                $stmt = $this->pdo->query("SELECT * FROM activeSessions ORDER BY id ASC");
+                $stmt = $this->pdo->query("SELECT * FROM activeSessions ORDER BY sessionID ASC");
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (PDOException $e) {
