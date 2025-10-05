@@ -22,7 +22,7 @@
                 </svg> -->
             </a>
             <a id="sessions" href="map.php">Sessions</a>
-            <a id="groups" href="groups.php">Groups</a>
+            <!-- <a id="groups" href="groups.php">Groups</a> -->
             <a id="profile" href="profile.php">Profile</a>
         </div>
 
