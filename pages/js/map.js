@@ -11,6 +11,8 @@
 const map = L.map("map")
 const markers = L.markerClusterGroup();
 
+let previousView = null;
+
 async function setMapToApproximateLocation() {
     try {
         // Use a free, no-auth IP geolocation API
@@ -40,17 +42,17 @@ async function setMapToApproximateLocation() {
 
 function registerMapSession(id, lat, lng) {
     const marker = L.circleMarker([lat, lng], {
-        radius: 6,
-        color: "green",
-        fillColor: "green",
-        fillOpacity: 0.8,
+        radius: 20,
+        color: "cyan",
+        fillColor: "black",
+        fillOpacity: 0.7,
     });
 
     marker.customData = [id];
 
     marker.on("click", () => { // Only if clicked when not in group
         console.log("Clicked marker ID #" + marker.customData[0]);
-        markerClick(marker.customData)
+        markerClick(marker.customData[0])
     });
 
     markers.addLayer(marker);
@@ -93,9 +95,9 @@ function tConvert(time) {
 function updateSelectedMarkers(activeIds) {
     markers.getLayers().forEach((marker, _) => {
         if (activeIds.includes(marker.customData[0])) {
-            marker.setStyle({color: "red", fillColor: 'red'}); // Selected
+            marker.setStyle({color: "cyan", fillColor: 'black'}); // Selected
         } else {
-            marker.setStyle({color: "green", fillColor: 'green'});
+            marker.setStyle({color: "white", fillColor: 'black'});
         }
         
     });
@@ -105,6 +107,8 @@ function queryCardsInfo(id) {
     let cardDiv = document.createElement("div");
     cardDiv.className = "sessionCard";
     cardDiv.setAttribute("sessionID", id);
+    cardDiv.onmouseover = function(){zoomMarker(id)};
+    cardDiv.onclick = function(){markerClick(id)};
 
     var req = new XMLHttpRequest();
     req.responseType = 'json';
@@ -159,6 +163,51 @@ function queryCardsInfo(id) {
     document.getElementById("sidebarCards").appendChild(cardDiv)
 }
 
+function querySessionInfo(id) {
+    sUser = document.getElementById("infoUser")
+    sSubject = document.getElementById("infoSubject")
+    sTime = document.getElementById("infoTime")
+    sTraffic = document.getElementById("infoTraffic")
+    sDesc = document.getElementById("infoDesc")
+
+    var req = new XMLHttpRequest();
+    req.responseType = 'json';
+    req.open('GET', "api/session.php?id=" + id, true);
+    req.onload = function() {
+        var jsonResponse = req.response;
+        sSubject.innerHTML = jsonResponse["subject"]
+        
+        startTimeTxt = tConvert(jsonResponse["startTime"])
+        endTimeTxt = tConvert(jsonResponse["endTime"])
+
+        sTime.innerHTML = startTimeTxt + " to " + endTimeTxt
+
+        sDesc.innerHTML = jsonResponse["description"]
+
+        primaryUser = jsonResponse["primaryUser"]
+
+        trafficTxt = jsonResponse["traffic"]
+        if (trafficTxt == 0) {
+            sTraffic.innerHTML = "<span class='trafficRed'></span> - LOCKED IN"
+        } else if (trafficTxt == 1) {
+            sTraffic.innerHTML = "<span class='trafficYellow'></span> - Chat and Work"
+        } else {
+            sTraffic.innerHTML = "<span class='trafficGreen'></span> - Yap Session"
+        }
+
+        var req2 = new XMLHttpRequest();
+        req2.responseType = 'json';
+        req2.open('GET', "api/users.php?id=" + primaryUser, true);
+        req2.onload = function() {
+            var jsonResponse = req2.response;
+
+            sUser.innerHTML = jsonResponse["userName"]
+        }
+        req2.send(null);
+    };
+    req.send(null);
+}
+
 function clusterClick(data) {
     // data: array of [id]
     setDisplaySidebar(false, true, false);
@@ -173,13 +222,44 @@ function clusterClick(data) {
     updateSelectedMarkers(activeIds)
 }
 
-function markerClick(data) {
-    // data: [id]
+function markerClick(id) {
+    zoomMarker(id, 17);
+    previousView = null;
+
+    querySessionInfo(id)
     setDisplaySidebar(false, false, true);
     document.getElementById("sidebarCards").innerHTML = "";
 
-    updateSelectedMarkers([data[0]])
+    updateSelectedMarkers([id])
 }
+
+function zoomMarker(id, zoom=16) {
+    marker = markers.getLayers().find(e => e.customData[0] == id)
+    if (!marker) {
+        console.warn("No marker found for id", id);
+        return;
+    }
+
+    if (!previousView) {
+        previousView = {
+            center: map.getCenter(),
+            zoom: map.getZoom(),
+        };
+    }
+
+    // Pan and zoom to the marker
+    latlng = marker.getLatLng();
+    map.setView(latlng, zoom, { animate: true });
+}
+
+function unzoomMarker() {
+    if (previousView) {
+        map.setView(previousView.center, previousView.zoom, { animate: true });
+        previousView = null;
+    }
+}
+
+
 
 // Add OpenStreetMap tiles
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {

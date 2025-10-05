@@ -25,6 +25,10 @@ main {
     grid-template-rows: auto auto;
 }
 
+.sessionCard:hover {
+    background-color: #999;
+}
+
 .cardTraffic {
     grid-row: 1 / span 2;
 }
