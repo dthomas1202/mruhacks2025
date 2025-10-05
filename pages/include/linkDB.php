@@ -86,6 +86,16 @@ if ($action === 'create') {
     /**
      * READ — Get all users or a specific one
      */
+    public function getUserID($name){
+    try {
+                $stmt = $this->pdo->prepare("SELECT * FROM users WHERE userName = :name");
+                $stmt->execute([':name' => $name]);
+                $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+                return $stmt['userID'];
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
     public function getUsers($id = null) {
         try {
             if ($id !== null) {
