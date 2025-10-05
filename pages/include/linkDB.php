@@ -143,6 +143,101 @@ if ($action === 'create') {
             return ["error" => $e->getMessage()];
         }
     }
+    /* Get group information as 2d ASSOC array
+    * input required groupID
+    * searches groups table for matching ID, and returns
+    * if id = null, returns all groups
+    */
+        public function getGroup($id = null) {
+        try {
+            if ($id !== null) {
+                $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE id = :id");
+                $stmt->execute([':id' => intval($id)]);
+                return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+            } else {
+                $stmt = $this->pdo->query("SELECT * FROM groups ORDER BY id ASC");
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
+    public function getSession($id = null) {
+        try {
+            if ($id !== null) {
+                $stmt = $this->pdo->prepare("SELECT * FROM activeSessions WHERE id = :id");
+                $stmt->execute([':id' => intval($id)]);
+                return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+            } else {
+                $stmt = $this->pdo->query("SELECT * FROM activeSessions ORDER BY id ASC");
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+            public function getGroup($id = null) {
+        try {
+            if ($id !== null) {
+                $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE id = :id");
+                $stmt->execute([':id' => intval($id)]);
+                return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+            } else {
+                $stmt = $this->pdo->query("SELECT * FROM group ORDER BY id ASC");
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
+    }
+        public function createGroup($id, $name) {
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO groups (
+            groupID, groupName)
+            VALUES (:groupid,:groupName)");
+            $stmt->execute([':groupid' => $id, ':groupName' => $name]);
+            return ["success" => true, "id" => $this->pdo->lastInsertId()];
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
+    public function createSession($id, $groupid, $long, $lat, $subject, $name, $traffic, $desc) {
+        try {
+            $stmt = $this->pdo->prepare("INSERT INTO activeSessions (
+            sessionID,
+            groupID,
+            longitude,
+            latitude,
+            subject,
+            name,
+            traffic,
+            description)
+            VALUES (
+            :id,
+            :groupid,
+            :long,
+            :lat,
+            :subject,
+            :name,
+            :traffic,
+            :desc)");
+            $stmt->execute([
+                ':id' => $id,
+                ':groupid' => $groupid,
+                ':long' => $long,
+                ':lat' => $lat,
+                ':subject' => $subject,
+                ':name' => $name,
+                ':traffic' => $traffic,
+                ':desc' => $desc
+            
+            ]);
+            return ["success" => true, "id" => $this->pdo->lastInsertId()];
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
+
 
     /** Optional: close connection manually */
     public function close() {
