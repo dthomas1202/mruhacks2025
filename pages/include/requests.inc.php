@@ -28,25 +28,5 @@ class dataLink {
     }
 
 }
-class user {
-    private static $baseStatement = "SELECT * FROM users";
-    public function __construct(){
-        $this->$pdo($connString);
-    }
-    // return all users as an array
-    public function getAll() {
-        $sql = self::$baseStatement;
-        $statement = dataLink::runQuery($this->pdo, $sql, null);
-        return $statement->fetchAll();
-    }
-    public function loginUser($userName, $password) {
-        $sql = self::$baseStatement . "WHERE userName=" . $userName;
-        $statement = dataLink::runQuery($this->pdo, $sql, null);
-        $result = $statement->fetch();
-        if ($password == $result['userPassword']){
-            
-        }
-    }
-}
 
 ?>
