@@ -34,57 +34,76 @@
     </header>
 
     <main>
-        <div>
-        <p>Create New Session</p>
-        <form action>
-            <!-- <div class="" -->
-            <label for="study">Study topic</label>
-            <input type="text" id="study">
-            <label for="visible">Visibility</label>
-            <select id="visible">
-                <option value="public">Public</option>
-                <option value="placeholder">Placeholder</option>
-            </select>
-            <div class="selectTime">
-                <label for="startTime">Start time</label>
-                <input type="time" id="startTime">
-                <label for="endTime">End time</label>
-                <input type="time" id="endTime">
-            </div>
-            <div class="traffic">
-                <lable>Traffic Light</lable>
-                <div class="lights">
-                    <div class="greenLight">
-                        <input type="radio" value="green" name="radio">
-                        <span class="light" id="green"></span>
+        <div class="container">
+            <p id="newSessionTitle">Create New Session</p>
+            <form action="">
+                <div id="uphalf">
+                    <div id="studyvisible">
+                        <div id="studyDiv">
+                            <label for="study">Study topic</label>
+                            <input type="text" id="study" placeholder="E.g. Web 2, Database 1" required>
+                        </div>
+                        <div id="visibleDiv">
+                            <label for="visible">Visibility</label>
+                            <select id="visible">
+                                <option value="public">Public</option>
+                                <option value="placeholder">Placeholder</option>
+                            </select>
+                        </div>
                     </div>
-                    <div class="yellowLight">
-                        <input type="radio" value="yellow" id="yellow" name="radio">
-                        <span class="light"></span>
-                    </div>
-                    <div class="redLight">
-                        <input type="radio" value="red" id="red" name="radio">
-                        <span class="light"></span>
+                    <div id="timeTraffic">
+                        <div id="timeDiv">
+                            <div id="startTimeDiv">
+                                <label for="startTime">Start time</label>
+                                <input type="time" id="startTime" required>
+                            </div>
+                            <div id="endTimeDiv">
+                                <label for="endTime">End time</label>
+                                <input type="time" id="endTime" required>
+                            </div>
+                        </div>
+
+                        <div class="traffic">
+                            <label>Traffic Light</label>
+                            <div class="lights">
+                                <div class="greenLight">
+                                    <input type="radio" value="green" name="radio">
+                                    <span class="light" id="green"></span>
+                                </div>
+                                <div class="yellowLight">
+                                    <input type="radio" value="yellow" id="yellow" name="radio">
+                                    <span class="light"></span>
+                                </div>
+                                <div class="redLight">
+                                    <input type="radio" value="red" id="red" name="radio">
+                                    <span class="light"></span>
+                                </div>
+                            </div>
+
+                            <p class="status" id="noneSelected">Select level of focus</p>
+                            <!-- Not labels, idk how that works or changes things -->
+                            <p class="status" for="green" id="greenStatus">"Yap Session"</p>
+                            <p class="status" for="yellow" id="yellowStatus">"Chat and work"</p>
+                            <p class="status" for="red" id="redStatus">"I need to LOCK IN"</p>
+                        </div>
                     </div>
                 </div>
-                <p class="status" id="noneSelected">Select level of focus</p>
-                <label class="status" for="green">"Yap Session"</label>
-                <label class="status" for="yellow">"Chat and work"</label>
-                <label class="status" for="red">"I need to LOCK IN"</label>
-            </div>
-            <div class="location">
-                <label for="map">Location</label>
-                <!-- map display -->
-            </div>
-            <div class="description">
-                <label for="textDescription">Description</label>
-                <input type="text" id="textDescription">
-            </div>
 
-            <input type="submit" value="Create Session">
-        </form>
-    
-        </div> 
+                <div class="location">
+                    <label for="map">Location</label>
+                    <div id="map">blah</div>
+                    <!-- map display -->
+                </div>
+                <div class="description">
+                    <label for="textDescription">Description</label>
+                    <textarea type="input" id="textDescription"
+                        placeholder="Enter a description/details about the study session"></textarea>
+                </div>
+
+                <input id="createSession" type="submit" value="Create Session">
+            </form>
+
+        </div>
 
 
     </main>
