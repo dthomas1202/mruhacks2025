@@ -29,6 +29,14 @@ main {
     background-color: #999;
 }
 
+.sessionCardActive {
+    background-color: #8A8;
+}
+
+.sessionCardActive:hover {
+    background-color: #797;
+}
+
 .cardTraffic {
     grid-row: 1 / span 2;
 }
@@ -76,10 +84,6 @@ main {
     display: none;
 }
 
-#sidebarInfo button {
-    display: block;
-}
-
 #sidebarCreateSession {
     background-color: #DDD;
 }
@@ -88,10 +92,17 @@ main {
     
 }
 
-#sessionJoin {
-
+#sessionMod {
 }
 
-#sessionLeave {
-    display: none;
+a.button {
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: black;
+    background-color: grey;
+    text-decoration: none;
+}
+
+a.button:hover {
+    background-color: darkgrey;
 }

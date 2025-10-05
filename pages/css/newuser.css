@@ -35,3 +35,73 @@ font-weight: 500;
 line-height: normal;
 }
 
+
+
+.lights {
+    display: flex;
+    width: 18.5625rem;
+    /* height: 5.4375rem; */
+    padding: 1.3125rem 2.5rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 0.625rem;
+    border: 3px solid #D7D7D7;
+    /* background: #FFF; */
+}
+
+.lights div {
+    display: flex;
+}
+
+.lights input {
+    position: absolute;
+    opacity: 25%;
+    width: 3.2rem;
+    height: 3.2rem;
+}
+
+/* Traffic light circle */
+.lights span {
+    width: 2.8125rem;
+    height: 2.8125rem;
+    border-radius: 2.8125rem;
+    display: block;
+}
+
+.greenLight span {
+    border: 6px solid #80A861;
+}
+
+.greenLight:hover>span {
+    background-color: #80A861;
+}
+
+.greenLight input:checked~span {
+    background-color: #80A861;
+}
+
+.yellowLight span {
+    border: 6px solid #FFDF53;
+
+}
+
+.yellowLight:hover>span {
+    background-color: #FFDF53;
+}
+
+.yellowLight input:checked~span {
+    background-color: #FFDF53;
+}
+
+.redLight span {
+    border: 6px solid #F55C5C;
+}
+
+.redLight:hover>span {
+    background-color: #F55C5C;
+}
+
+.redLight input:checked~span {
+    background-color: #F55C5C;
+}

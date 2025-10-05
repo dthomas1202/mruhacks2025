@@ -22,14 +22,6 @@ async function setMapToApproximateLocation() {
         if (data && data.latitude && data.longitude) {
             const { latitude, longitude, city, country_name } = data;
             map.setView([latitude, longitude], 10); // zoom level 10 = city scale
-
-            L.circleMarker([latitude, longitude], {
-                radius: 8,
-                fillColor: "blue",
-                fillOpacity: 0.7,
-                color: "white",
-                weight: 2,
-            }).addTo(map);
         } else {
             console.warn("Could not determine location, defaulting to center of US");
             map.setView([39.5, -98.35], 4);
@@ -121,6 +113,11 @@ function queryCardsInfo(id) {
         endTimeTxt = tConvert(jsonResponse["endTime"])
         primaryUser = jsonResponse["primaryUser"]
 
+        if (id == CURRENT_SESSION) {
+            
+            cardDiv.classList.add("sessionCardActive");
+        }
+
         trafficDiv = document.createElement("div");
         trafficDiv.className = "cardTraffic";
         trafficDiv.classList.add("cardTraffic");
@@ -164,11 +161,14 @@ function queryCardsInfo(id) {
 }
 
 function querySessionInfo(id) {
-    sUser = document.getElementById("infoUser")
-    sSubject = document.getElementById("infoSubject")
-    sTime = document.getElementById("infoTime")
-    sTraffic = document.getElementById("infoTraffic")
-    sDesc = document.getElementById("infoDesc")
+    let sUser = document.getElementById("infoUser")
+    let sSubject = document.getElementById("infoSubject")
+    let sTime = document.getElementById("infoTime")
+    let sTraffic = document.getElementById("infoTraffic")
+    let sDesc = document.getElementById("infoDesc")
+    let sMod = document.getElementById("sessionMod")
+    let sModEdit = document.getElementById("sessionModEdit")
+    let sModId = document.getElementById("sessionModId")
 
     var req = new XMLHttpRequest();
     req.responseType = 'json';
@@ -185,6 +185,20 @@ function querySessionInfo(id) {
         sDesc.innerHTML = jsonResponse["description"]
 
         primaryUser = jsonResponse["primaryUser"]
+
+        if (primaryUser == USER_ID) {
+            sMod.value = "Destroy"
+            sModEdit.value = "destroy"
+            sModId.value = id
+        } else if (id == CURRENT_SESSION) {
+            sMod.value = "Leave"
+            sModEdit.value = "leave"
+            sModId.value = id
+        } else {
+            sMod.value = "Join"
+            sModEdit.value = "join"
+            sModId.value = id
+        }
 
         trafficTxt = jsonResponse["traffic"]
         if (trafficTxt == 0) {
@@ -282,4 +296,3 @@ markers.on("clusterclick", (event) => {
 
 setMapToApproximateLocation();
 registerMapSessions();
-
