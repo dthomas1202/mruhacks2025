@@ -1,0 +1,53 @@
+.frame {
+    width: 32.8125rem;
+    height: 5.3125rem;
+    flex-shrink: 0;
+    border-radius: 1.5625rem;
+    background: #FFF;
+}
+
+subjecttext {
+    color: #000;
+
+    font-family: Inter;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+name {
+    font-size: 1rem;
+}
+
+time {
+    color: #1B3B08;
+    font-family: Inter;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.text {
+    display: flex;
+    width: 26.75rem;
+    height: 3.875rem;
+    padding: 0.3125rem 0.625rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.components {
+    display: flex;
+    width: 30.5rem;
+    align-items: center;
+    gap: 0.9375rem;
+}
+
+background {
+    width: 32.8125rem;
+    height: 5.3125rem;
+    flex-shrink: 0;
+}
