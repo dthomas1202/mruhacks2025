@@ -32,7 +32,7 @@ a {
     gap: 0.625rem;
 }
 
-.leftHeader a:hover {
+.leftHeader a:hover, #logout:hover {
     border-radius: 0.9375rem;
     background: #E0E5D7;
 }
