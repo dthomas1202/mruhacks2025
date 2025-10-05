@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "linkDB.php";
+require_once "/include/linkDB.php";
 
 $message = "";
 // -----------LOGOUT LINK-------
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // connect to the DB
-        $dbPath = __DIR__ . '../../../database/link.db';
+        $dbPath = __DIR__ . '../database/link.db';
         $db = new linkDB($dbPath);
         // verify credentials
         if ($db->checkPwd($username, $password)) {
