@@ -125,7 +125,7 @@ if ($action === 'create') {
             preferredTraffic = :traffic,
             preferredTimes = :times,
             currentSession = :session
-            WHERE id = :id)";
+            WHERE id = :id)");
             $stmt->execute([
                 ':name' => $name,
                 ':email' => $email,
@@ -158,20 +158,7 @@ if ($action === 'create') {
     * searches groups table for matching ID, and returns
     * if id = null, returns all groups
     */
-        public function getGroup($id = null) {
-        try {
-            if ($id !== null) {
-                $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE id = :id");
-                $stmt->execute([':id' => intval($id)]);
-                return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-            } else {
-                $stmt = $this->pdo->query("SELECT * FROM groups ORDER BY id ASC");
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-        } catch (PDOException $e) {
-            return ["error" => $e->getMessage()];
-        }
-    }
+
     public function getSession($id = null) {
         try {
             if ($id !== null) {
@@ -185,7 +172,8 @@ if ($action === 'create') {
         } catch (PDOException $e) {
             return ["error" => $e->getMessage()];
         }
-            public function getGroup($id = null) {
+    }
+    public function getGroup($id = null) {
         try {
             if ($id !== null) {
                 $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE id = :id");
@@ -198,7 +186,6 @@ if ($action === 'create') {
         } catch (PDOException $e) {
             return ["error" => $e->getMessage()];
         }
-    }
     }
         public function createGroup($id, $name) {
         try {
