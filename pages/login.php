@@ -23,16 +23,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     try {
         // connect to the DB
-        $dbPath = __DIR__ . '../database/link.db';
+        $dbPath = __DIR__ . '../../database/link.db';
         $db = new linkDB($dbPath);
         // verify credentials
         if ($db->checkPwd($username, $password)) {
             $userid = $db->getUserID($username);
             $user = $db->getUsers($userid);
-            $_SESSION = $user;
             $_SESSION["userName"] = $username;
             // Where we send people successful login
-            header("Location: dashboard.php");
+            header("Location: map.php");
             exit;
         } else {
             $message = "Invalid username or password.";

@@ -86,16 +86,16 @@ if ($action === 'create') {
     /**
      * READ — Get all users or a specific one
      */
-    public function getUserID($name){
-    try {
-                $stmt = $this->pdo->prepare("SELECT * FROM users WHERE userName = :name");
-                $stmt->execute([':name' => $name]);
-                $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-                return $stmt['userID'];
-        } catch (PDOException $e) {
-            return ["error" => $e->getMessage()];
-        }
-    }
+    // public function getUserID($name){
+    // try {
+    //             $stmt = $this->pdo->prepare("SELECT * FROM users WHERE userName = :name");
+    //             $stmt->execute([':name' => $name]);
+    //             $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    //             return $stmt['userID'];
+    //     } catch (PDOException $e) {
+    //         return ["error" => $e->getMessage()];
+    //     }
+    // }
     public function getUsers($id = null) {
         try {
             if ($id !== null) {
@@ -110,6 +110,31 @@ if ($action === 'create') {
             return ["error" => $e->getMessage()];
         }
     }
+    public function getUserID($name){
+    try {
+        $stmt = $this->pdo->prepare("SELECT userID FROM users WHERE userName = :name");
+        $stmt->execute([':name' => $name]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $row ? $row['userID'] : null;
+    } catch (PDOException $e) {
+        return null;
+    }
+}
+
+public function checkPwd($name, $password){
+    try {
+        $stmt = $this->pdo->prepare("SELECT userPassword FROM users WHERE userName = :name");
+        $stmt->execute([':name' => $name]);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($user && $user['userPassword'] === $password) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (PDOException $e) {
+        return false;
+    }
+}
 
     /**
      * UPDATE — Modify a user
