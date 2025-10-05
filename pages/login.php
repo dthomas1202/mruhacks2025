@@ -56,9 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
         <?php require("static/header.php");?>
 
-    <h1>TeleLink</h1>
+    <h1>FriendLink</h1>
     <p>
-        Log into TeleLink
+        Log into FriendLink
     </p>
     <form method="POST" action="">
         <label for="username"> Username: </label> <br>
