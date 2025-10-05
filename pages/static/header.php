@@ -19,7 +19,7 @@
         echo "</div>";
         } else{
             echo "<div class='rightHeader'>";
-            echo "<a id='login' href='logout.php'>Log out</a>";
+            echo "<a id='logout' href='logout.php'>Log out</a>";
         }
         ?>
     </header>

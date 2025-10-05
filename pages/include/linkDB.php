@@ -51,6 +51,7 @@ if ($action === 'create') {
      */
     public function createUser($userName, $userEmail, $userPassword, $userSubject, $userSkills, $preferredTraffic, $preferredTimes) {
         try {
+            $userID = ->pdo->execute("SELECT MAX('userID')");
             $stmt = $this->pdo->prepare("INSERT INTO users (
             userID,
             userEmail,
@@ -61,6 +62,7 @@ if ($action === 'create') {
             preferredTimes,
             currentSession)
             VALUES (
+                :userID,
                 :userName,
                 :userPassword,
                 :userSubject,
@@ -69,6 +71,7 @@ if ($action === 'create') {
                 :preferredTimes,
                 :session)");
             $stmt->execute([
+                ':userID' =>
                 ':userName' => $userName,
                 ':userEmail' => $userEmail,
                 ':userPassword' => $userPassword,
@@ -177,6 +180,33 @@ public function checkPwd($name, $password){
         } catch (PDOException $e) {
             return ["error" => $e->getMessage()];
         }
+    }
+    public function destroySession($sessionid){
+        // iterate through users and have them leave session
+        try {  
+            $stmt = $this->pdo->prepare("DELETE FROM activeSessions WHERE sessionID = :id");
+            $stmt ->execute([':id'=> intval($sessionid)]);
+            foreach ($this->getUsers() as $key=>$value){
+                if ($value['currentSession'] == $sessionid){
+                    $this->leaveSession($value['userID']);
+               }
+            }
+            return ['success' => stmt->rowCount() >0];
+
+        } catch (PDOEXCEPTION $e) {
+            return ["error"=> $e->getMessage()];
+
+        }
+    }
+    // leave session
+    public function leaveSession($userid){
+        $stmt = $this->pdo->prepare("update users set currentSession = null WHERE userID= :id");
+        $stmt->execute(':id' => intval($userid));
+    }
+    //join session
+    public function joinSession($userid, $sessionid){
+        $stmt = $this->pdo->prepare("UPDATE users set currentSession = :session WHERE userID = :user");
+        $stmt->execute([]':session'=>intval($sessionid), ':id'=>intval($userid)] );
     }
     /* Get group information as 2d ASSOC array
     * input required groupID
