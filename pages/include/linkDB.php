@@ -75,7 +75,7 @@ if ($action === 'create') {
                 ':userSubject' => $userSubject,
                 ':userSkills' => $userSkills,
                 ':preferredTraffic' => $preferredTraffic,
-                ':preferredTimes' => $preferredTimes
+                ':preferredTimes' => $preferredTimes,
                 ':session' => 0]);
             return ["success" => true, "id" => $this->pdo->lastInsertId()];
         } catch (PDOException $e) {
@@ -86,14 +86,24 @@ if ($action === 'create') {
     /**
      * READ — Get all users or a specific one
      */
+    public function getUserID($name){
+    try {
+                $stmt = $this->pdo->prepare("SELECT * FROM users WHERE userName = :name");
+                $stmt->execute([':name' => $name]);
+                $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+                return $stmt['userID'];
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
+    }
     public function getUsers($id = null) {
         try {
             if ($id !== null) {
-                $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
+                $stmt = $this->pdo->prepare("SELECT * FROM users WHERE userID = :id");
                 $stmt->execute([':id' => intval($id)]);
                 return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
             } else {
-                $stmt = $this->pdo->query("SELECT * FROM users ORDER BY id ASC");
+                $stmt = $this->pdo->query("SELECT * FROM users ORDER BY userID ASC");
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (PDOException $e) {
@@ -115,7 +125,7 @@ if ($action === 'create') {
             preferredTraffic = :traffic,
             preferredTimes = :times,
             currentSession = :session
-            WHERE id = :id)";
+            WHERE id = :id)");
             $stmt->execute([
                 ':name' => $name,
                 ':email' => $email,
@@ -136,7 +146,7 @@ if ($action === 'create') {
      */
     public function deleteUser($id) {
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
+            $stmt = $this->pdo->prepare("DELETE FROM users WHERE userID = :id");
             $stmt->execute([':id' => intval($id)]);
             return ["success" => $stmt->rowCount() > 0];
         } catch (PDOException $e) {
@@ -148,47 +158,34 @@ if ($action === 'create') {
     * searches groups table for matching ID, and returns
     * if id = null, returns all groups
     */
-        public function getGroup($id = null) {
-        try {
-            if ($id !== null) {
-                $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE id = :id");
-                $stmt->execute([':id' => intval($id)]);
-                return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-            } else {
-                $stmt = $this->pdo->query("SELECT * FROM groups ORDER BY id ASC");
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-        } catch (PDOException $e) {
-            return ["error" => $e->getMessage()];
-        }
-    }
+
     public function getSession($id = null) {
         try {
             if ($id !== null) {
-                $stmt = $this->pdo->prepare("SELECT * FROM activeSessions WHERE id = :id");
+                $stmt = $this->pdo->prepare("SELECT * FROM activeSessions WHERE sessionID = :id");
                 $stmt->execute([':id' => intval($id)]);
                 return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
             } else {
-                $stmt = $this->pdo->query("SELECT * FROM activeSessions ORDER BY id ASC");
-                return $stmt->fetchAll(PDO::FETCH_ASSOC);
-            }
-        } catch (PDOException $e) {
-            return ["error" => $e->getMessage()];
-        }
-            public function getGroup($id = null) {
-        try {
-            if ($id !== null) {
-                $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE id = :id");
-                $stmt->execute([':id' => intval($id)]);
-                return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
-            } else {
-                $stmt = $this->pdo->query("SELECT * FROM group ORDER BY id ASC");
+                $stmt = $this->pdo->query("SELECT * FROM activeSessions ORDER BY sessionID ASC");
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (PDOException $e) {
             return ["error" => $e->getMessage()];
         }
     }
+    public function getGroup($id = null) {
+        try {
+            if ($id !== null) {
+                $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE groupID = :id");
+                $stmt->execute([':id' => intval($id)]);
+                return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+            } else {
+                $stmt = $this->pdo->query("SELECT * FROM group ORDER BY groupID ASC");
+                return $stmt->fetchAll(PDO::FETCH_ASSOC);
+            }
+        } catch (PDOException $e) {
+            return ["error" => $e->getMessage()];
+        }
     }
         public function createGroup($id, $name) {
         try {

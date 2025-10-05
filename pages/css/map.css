@@ -1,0 +1,93 @@
+html, body {
+    width: 100%;
+    height: 100vh;
+}
+
+main {
+    height: 93vh;
+    display: grid;
+    grid-template-columns: auto 30vw;
+    grid-template-rows: auto 10vh;
+}
+
+#map {
+    grid-row: 1 / span 2;
+}
+
+#sidebar {
+    overflow-y: scroll;
+}
+
+.sessionCard {
+    background-color: #AAA;
+    display: grid;
+    grid-template-columns: 5vw auto auto;
+    grid-template-rows: auto auto;
+}
+
+.cardTraffic {
+    grid-row: 1 / span 2;
+}
+
+.trafficRed, .trafficYellow, .trafficGreen {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    margin: auto;
+    display: inline-block;
+}
+.trafficRed {
+    background-color: red;
+}
+.trafficYellow {
+    background-color: yellow;
+}
+.trafficGreen {
+    background-color: green;
+}
+
+.sessionSubject {
+
+}
+
+.sessionTime {
+    grid-column: 3 / 3;
+    grid-row: 1 / span 2;
+    text-align: right;
+}
+
+.sessionUser {
+
+}
+
+#sidebarInit {
+
+}
+
+#sidebarCards {
+    display: none;
+}
+
+#sidebarInfo {
+    display: none;
+}
+
+#sidebarInfo button {
+    display: block;
+}
+
+#sidebarCreateSession {
+    background-color: #DDD;
+}
+
+#sidebarCreateSession button {
+    
+}
+
+#sessionJoin {
+
+}
+
+#sessionLeave {
+    display: none;
+}
