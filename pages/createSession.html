@@ -32,65 +32,60 @@
             <a id="logout" href="">Log out</a>
         </div>
     </header>
-    <p>Create New Session</p>
-    <form action>
-        <!-- <div class="" -->
-        <label for="study">Study topic</label>
-        <input type="text" id="study">
-        <label for="visible">Visibility</label>
-        <select id="visible">
-            <option value="public">Public</option>
-            <option value="placeholder">Placeholder</option>
-        </select>
-        <div class="selectTime">
-            <label for="startTime">Start time</label>
-            <input type="time" id="startTime">
-            <label for="endTime">End time</label>
-            <input type="time" id="endTime">
-        </div>
-        <div class="traffic">
-            <lable>Traffic Light</lable>
-            <div class="lights">
-                <div class="greenLight">
-                    <span class="light"></span>
-                    <input type="radio" value="green" id="green" name="radio">
-                </div>
-                <div class="yellowLight">
-                    <input type="radio" value="yellow" id="yellow" name="radio">
-                    <span class="light"></span>
-                </div>
-                <div class="redLight">
-                    <input type="radio" value="red" id="red" name="radio">
-                    <span class="light"></span>
-                </div>
-
-            </div>
-            <p id="noneSelected">Select level of focus</p>
-            <label for="green">
-
-            </label>
-            <label for="yellow">
-
-            </label>
-            <label for="red">
-
-            </label>
-        </div>
-        <div class="location">
-            <label for="map">Location</label>
-            <!-- map display -->
-        </div>
-        <div class="description">
-            <label for="textDescription">Description</label>
-            <input type="text" id="textDescription">
-        </div>
-
-        <input type="submit" value="Create Session">
-
-
-    </form>
 
     <main>
+        <div>
+        <p>Create New Session</p>
+        <form action>
+            <!-- <div class="" -->
+            <label for="study">Study topic</label>
+            <input type="text" id="study">
+            <label for="visible">Visibility</label>
+            <select id="visible">
+                <option value="public">Public</option>
+                <option value="placeholder">Placeholder</option>
+            </select>
+            <div class="selectTime">
+                <label for="startTime">Start time</label>
+                <input type="time" id="startTime">
+                <label for="endTime">End time</label>
+                <input type="time" id="endTime">
+            </div>
+            <div class="traffic">
+                <lable>Traffic Light</lable>
+                <div class="lights">
+                    <div class="greenLight">
+                        <input type="radio" value="green" name="radio">
+                        <span class="light" id="green"></span>
+                    </div>
+                    <div class="yellowLight">
+                        <input type="radio" value="yellow" id="yellow" name="radio">
+                        <span class="light"></span>
+                    </div>
+                    <div class="redLight">
+                        <input type="radio" value="red" id="red" name="radio">
+                        <span class="light"></span>
+                    </div>
+                </div>
+                <p class="status" id="noneSelected">Select level of focus</p>
+                <label class="status" for="green">"Yap Session"</label>
+                <label class="status" for="yellow">"Chat and work"</label>
+                <label class="status" for="red">"I need to LOCK IN"</label>
+            </div>
+            <div class="location">
+                <label for="map">Location</label>
+                <!-- map display -->
+            </div>
+            <div class="description">
+                <label for="textDescription">Description</label>
+                <input type="text" id="textDescription">
+            </div>
+
+            <input type="submit" value="Create Session">
+        </form>
+    
+        </div> 
+
 
     </main>
 </body>

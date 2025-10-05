@@ -1,3 +1,12 @@
+body {
+    width: 100%;
+    margin:0;
+}
+main {
+    background-color: #E0E5D7;
+}
+
+
 .lights {
     display: flex;
     width: 18.5625rem;
@@ -17,7 +26,7 @@
 
 .lights input {
     position: absolute;
-    opacity: 50%;
+    opacity: 25%;
     width: 3.2rem;
     height: 3.2rem;
 }
@@ -34,28 +43,35 @@
     border: 6px solid #80A861;
 }
 
-.greenLight:hover > span, lights {
+.greenLight:hover>span {
     background-color: #80A861;
 }
 
-
-
-/* .lights input:checked~.greenLight span {
+.greenLight input:checked~span {
     background-color: #80A861;
-} */
+}
 
 .yellowLight span {
     border: 6px solid #FFDF53;
 
 }
 
-.redLight span {
-    border: 6px solid #F55C5C;
-
-
+.yellowLight:hover>span {
+    background-color: #FFDF53;
 }
 
+.yellowLight input:checked~span {
+    background-color: #FFDF53;
+}
 
-#yellow {}
+.redLight span {
+    border: 6px solid #F55C5C;
+}
 
-#red {}
+.redLight:hover>span {
+    background-color: #F55C5C;
+}
+
+.redLight input:checked~span {
+    background-color: #F55C5C;
+}
