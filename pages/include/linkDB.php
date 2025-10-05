@@ -146,7 +146,7 @@ if ($action === 'create') {
      */
     public function deleteUser($id) {
         try {
-            $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
+            $stmt = $this->pdo->prepare("DELETE FROM users WHERE userID = :id");
             $stmt->execute([':id' => intval($id)]);
             return ["success" => $stmt->rowCount() > 0];
         } catch (PDOException $e) {
@@ -176,11 +176,11 @@ if ($action === 'create') {
     public function getGroup($id = null) {
         try {
             if ($id !== null) {
-                $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE id = :id");
+                $stmt = $this->pdo->prepare("SELECT * FROM groups WHERE groupID = :id");
                 $stmt->execute([':id' => intval($id)]);
                 return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
             } else {
-                $stmt = $this->pdo->query("SELECT * FROM group ORDER BY id ASC");
+                $stmt = $this->pdo->query("SELECT * FROM group ORDER BY groupID ASC");
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (PDOException $e) {
