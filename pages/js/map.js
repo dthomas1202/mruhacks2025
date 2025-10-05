@@ -41,12 +41,12 @@ async function setMapToApproximateLocation() {
 function registerMapSession(id, lat, lng) {
     const marker = L.circleMarker([lat, lng], {
         radius: 6,
-        color: "red",
-        fillColor: "red",
+        color: "green",
+        fillColor: "green",
         fillOpacity: 0.8,
     });
 
-    marker.customData = {id};
+    marker.customData = [id];
 
     marker.on("click", () => { // Only if clicked when not in group
         console.log("Clicked marker ID #" + marker.customData[0]);
@@ -71,6 +71,100 @@ async function registerMapSessions() {
     req.send(null);
 }
 
+function setDisplaySidebar(init, cards, info) {
+    document.getElementById("sidebarInit").style.display = init ? "block" : "none"; 
+    document.getElementById("sidebarCards").style.display = cards ? "block" : "none"; 
+    document.getElementById("sidebarInfo").style.display = info ? "block" : "none"; 
+}
+
+function tConvert(time) {
+  // Check correct time format and split into components
+  time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+
+  if (time.length > 1) { // If time format correct
+    time = time.slice (1);  // Remove full string match value
+    time.pop();
+    time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+    time[0] = +time[0] % 12 || 12; // Adjust hours
+  }
+  return time.join (''); // return adjusted time or original string
+}
+
+function updateSelectedMarkers() {
+    clusterMarkers.forEach((marker, _) => {
+        marker.setStyle({fillColor: 'red'});
+    });
+}
+
+async function queryCardsInfo(id) {
+    let cardDiv = document.createElement("div");
+    cardDiv.className = "sessionCard";
+    cardDiv.setAttribute("sessionID", id);
+
+    var req = new XMLHttpRequest();
+    req.responseType = 'json';
+    req.open('GET', "api/session.php?id=" + id, true);
+    req.onload = function() {
+        var jsonResponse = req.response;
+        subjectTxt = jsonResponse["subject"]
+        trafficTxt = jsonResponse["traffic"]
+        startTimeTxt = tConvert(jsonResponse["startTime"])
+        endTimeTxt = tConvert(jsonResponse["endTime"])
+        primaryUser = jsonResponse["primaryUser"]
+
+        trafficDiv = document.createElement("div");
+        trafficDiv.className = "cardTraffic";
+        trafficDiv.classList.add("cardTraffic");
+
+        if (trafficTxt == 0) {
+            trafficDiv.classList.add("trafficRed");
+        } else if (trafficTxt == 1) {
+            trafficDiv.classList.add("trafficYellow");
+        } else {
+            trafficDiv.classList.add("trafficGreen");
+        }
+
+        cardDiv.appendChild(trafficDiv);
+
+        subject = document.createElement("p");
+        subject.className = "sessionSubject";
+        subject.innerHTML = subjectTxt
+        cardDiv.appendChild(subject);
+
+        var req2 = new XMLHttpRequest();
+        req2.responseType = 'json';
+        req2.open('GET', "api/users.php?id=" + primaryUser, true);
+        req2.onload = function() {
+            var jsonResponse = req2.response;
+
+            user = document.createElement("p");
+            user.className = "sessionUser";
+            user.innerHTML = jsonResponse["userName"]
+            cardDiv.appendChild(user);
+        }
+        req2.send(null);
+        
+        time = document.createElement("p");
+        time.className = "sessionTime";
+        time.innerHTML = startTimeTxt + " to<br>" + endTimeTxt
+        cardDiv.appendChild(time);
+    };
+    req.send(null);
+
+    document.getElementById("sidebarCards").appendChild(cardDiv)
+}
+
+function clusterClick(data) {
+    // data: array of [id]
+    id = data[0];
+    setDisplaySidebar(false, true, false);
+    document.getElementById("sidebarCards").innerHTML = "";
+
+    data.forEach((customData, ) => {
+        queryCardsInfo(customData[0]);
+    });
+}
+
 // Add OpenStreetMap tiles
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     maxZoom: 18,
@@ -85,8 +179,9 @@ map.addLayer(markers);
 markers.on("clusterclick", (event) => {
     const clusterMarkers = event.layer.getAllChildMarkers();
     const clusterData = clusterMarkers.map((m) => m.customData);
-    console.log("Cluster clicked IDs", clusterData);
-    //TODO
+
+    console.log("Cluster clicked IDs", clusterData[0]);
+    clusterClick(clusterData);
 });
 
 setMapToApproximateLocation();

@@ -22,7 +22,7 @@
                 <h3>Please Select a Session in the Map</h3>
             </div>
             <div id="sidebarCards">
-                <div class="sessionCard">
+                <!-- <div class="sessionCard">
                     <div class="trafficRed cardTraffic"></div>
                     <p class="sessionSubject">Subject</p>
                     <p class="sessionTime">10:00am to<br> 3:00pm</p>
@@ -39,7 +39,7 @@
                     <p class="sessionSubject">Subject</p>
                     <p class="sessionTime">10:00am to<br> 3:00pm</p>
                     <p class="sessionUser">Username</p>
-                </div>
+                </div> -->
             </div>
             <div id="sidebarInfo">
                 <p>Username</p>

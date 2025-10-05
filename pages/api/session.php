@@ -3,10 +3,12 @@ require("../include/linkDB.php");
 $dbPath = '../../database/link.db';
 $db = new linkDB($dbPath);
 
-$sessionList = $db->getSession();
+
 
 $newSessionList = [];
 if (isset($_GET["loc"])) {
+    $sessionList = $db->getSession();
+
     foreach ($sessionList as $s) {
         array_push($newSessionList, [
             "sessionID" => $s["sessionID"],
@@ -15,7 +17,9 @@ if (isset($_GET["loc"])) {
         ]);
     }
 
-} else {
+} elseif (isset($_GET["id"])) {
+    $sessionList = $db->getSession($_GET["id"]);
+
     $newSessionList = $sessionList;
 }
 
