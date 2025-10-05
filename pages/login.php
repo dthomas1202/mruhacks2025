@@ -49,52 +49,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f2f5;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-        .login-box {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        input {
-            width: 100%;
-            padding: .5rem;
-            margin: .5rem 0;
-        }
-        button {
-            background: #007BFF;
-            border: none;
-            color: white;
-            padding: .5rem;
-            width: 100%;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .error { color: red; font-size: 0.9em; }
-    </style>
+    <link rel="stylesheet" href="css/signin.css">
 </head>
 <body>
-
-<div class="login-box">
-    <h2>Login</h2>
+    <h1>TeleLink</h1>
+    <p>
+        Log into TeleLink
+    </p>
     <form method="POST" action="">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <label for="username"> Username: </label> <br>
+        <input type="text" id="username" name="username" placeholder="Username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" placeholder="Password" required> <br>
         <button type="submit">Login</button>
         <?php if ($message): ?>
             <p class="error"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
     </form>
-</div>
+
 
 </body>
 </html>

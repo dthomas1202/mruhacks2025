@@ -8,18 +8,18 @@
                 </svg>
             </a>
             <a id="sessions" href="map.php">Sessions</a>
-            <a id="groups" href="groups.php">Groups</a>
+            <!-- <a id="groups" href="groups.php">Groups</a> -->
             <a id="profile" href="profile.php">Profile</a>
         </div>
+        <div class='rightHeader'>
         <?php if (!isset($_SESSION['userName'])){
-            echo "<div class='rightHeader'>";
             echo "<a id='login' href='login.php'>Log in</a>";
             echo "<a id='signup' href='createUser.php'>Sign up</a>";
-            echo "<a id='logout' href='logout.php'>Log out</a>";
-        echo "</div>";
+
         } else{
-            echo "<div class='rightHeader'>";
             echo "<a id='logout' href='logout.php'>Log out</a>";
         }
         ?>
+
+        </div>
     </header>

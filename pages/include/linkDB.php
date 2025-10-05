@@ -51,9 +51,9 @@ if ($action === 'create') {
      */
     public function createUser($userName, $userEmail, $userPassword, $userSubject, $userSkills, $preferredTraffic, $preferredTimes) {
         try {
-            $userID = ->pdo->execute("SELECT MAX('userID')");
             $stmt = $this->pdo->prepare("INSERT INTO users (
             userID,
+            userName,
             userEmail,
             userPassword,
             userSubject,
@@ -64,6 +64,7 @@ if ($action === 'create') {
             VALUES (
                 :userID,
                 :userName,
+                :userEmail,
                 :userPassword,
                 :userSubject,
                 :userSkills,
@@ -71,7 +72,7 @@ if ($action === 'create') {
                 :preferredTimes,
                 :session)");
             $stmt->execute([
-                ':userID' =>
+                ':userID' => null,
                 ':userName' => $userName,
                 ':userEmail' => $userEmail,
                 ':userPassword' => $userPassword,
@@ -79,10 +80,10 @@ if ($action === 'create') {
                 ':userSkills' => $userSkills,
                 ':preferredTraffic' => $preferredTraffic,
                 ':preferredTimes' => $preferredTimes,
-                ':session' => 0]);
-            return ["success" => true, "id" => $this->pdo->lastInsertId()];
+                ':session' => null]);
+            return;
         } catch (PDOException $e) {
-            return ["error" => $e->getMessage()];
+            echo $e->getMessage();
         }
     }
 
@@ -191,7 +192,7 @@ public function checkPwd($name, $password){
                     $this->leaveSession($value['userID']);
                }
             }
-            return ['success' => stmt->rowCount() >0];
+            return ['success' => $stmt->rowCount() >0];
 
         } catch (PDOEXCEPTION $e) {
             return ["error"=> $e->getMessage()];
@@ -200,13 +201,18 @@ public function checkPwd($name, $password){
     }
     // leave session
     public function leaveSession($userid){
-        $stmt = $this->pdo->prepare("update users set currentSession = null WHERE userID= :id");
-        $stmt->execute(':id' => intval($userid));
+        try {
+            $stmt = $this->pdo->prepare("update users set currentSession = null WHERE userID= :id");
+            $stmt->execute([':id' => intval($userid)]);
+        } catch (PDOEXCEPTION $e) {
+            echo $e->getMessage();
+
+        }
     }
     //join session
     public function joinSession($userid, $sessionid){
-        $stmt = $this->pdo->prepare("UPDATE users set currentSession = :session WHERE userID = :user");
-        $stmt->execute([]':session'=>intval($sessionid), ':id'=>intval($userid)] );
+        $stmt = $this->pdo->prepare("UPDATE users set currentSession = :session WHERE userID = :id");
+        $stmt->execute([':session'=>intval($sessionid), ':id'=>intval($userid)]);
     }
     /* Get group information as 2d ASSOC array
     * input required groupID
@@ -253,7 +259,7 @@ public function checkPwd($name, $password){
             return ["error" => $e->getMessage()];
         }
     }
-    public function createSession($id, $groupid, $long, $lat, $subject, $name, $traffic, $desc) {
+    public function createSession($long, $lat, $subject, $traffic, $desc, $primaryUser, $startTime, $endTime) {
         try {
             $stmt = $this->pdo->prepare("INSERT INTO activeSessions (
             sessionID,
@@ -261,32 +267,38 @@ public function checkPwd($name, $password){
             longitude,
             latitude,
             subject,
-            name,
             traffic,
-            description)
+            description,
+            primaryUser,
+            startTime,
+            endTime)
             VALUES (
             :id,
             :groupid,
             :long,
             :lat,
             :subject,
-            :name,
             :traffic,
-            :desc)");
+            :desc,
+            :pUser,
+            :sTime,
+            :eTime)");
             $stmt->execute([
-                ':id' => $id,
-                ':groupid' => $groupid,
+                ':id' => null,
+                ':groupid' => 0,
                 ':long' => $long,
                 ':lat' => $lat,
                 ':subject' => $subject,
-                ':name' => $name,
                 ':traffic' => $traffic,
-                ':desc' => $desc
+                ':desc' => $desc,
+                ':pUser' => $primaryUser,
+                ':sTime' => $startTime,
+                ':eTime' => $endTime
             
             ]);
-            return ["success" => true, "id" => $this->pdo->lastInsertId()];
+            return;
         } catch (PDOException $e) {
-            return ["error" => $e->getMessage()];
+            echo $e->getMessage();
         }
     }
 

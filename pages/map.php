@@ -1,9 +1,18 @@
 <?PHP
 session_start();
 require_once "./include/linkDB.php";
+$dbPath = '../database/link.db';
 if (!isset($_SESSION["userName"])) {
     header("Location: login.php");
     exit;
+}
+
+$db = new linkDB($dbPath);
+
+$currentSession = $db->getUsers($_SESSION["userID"])["currentSession"];
+
+if (!isset($currentSession)) {
+    $currentSession = "null";
 }
 ?>
 
@@ -17,6 +26,12 @@ if (!isset($_SESSION["userName"])) {
 
     <link rel="stylesheet" href="css/map.css">
     <link rel="stylesheet" href="css/common.css">
+    <script>
+        const USER_ID = <?=$_SESSION["userID"]?>;
+        const CURRENT_SESSION = <?=$currentSession?>;
+        console.log("USER_ID: " + USER_ID)
+        console.log("CURRENT_SESSION: " + CURRENT_SESSION)
+    </script>
 </head>
 <body>
     <?php require("static/header.php");?>
@@ -54,13 +69,16 @@ if (!isset($_SESSION["userName"])) {
                 <p id="infoTime">Time</p>
                 <p id="infoTraffic"><span class="trafficRed"></span> - Locked In</p>
                 <p id="infoDesc">Description</p>
-                <button type="button" id="sessionJoin">Join</button>
-                <button type="button" id="sessionLeave">Leave</button>
+                <form action="api/modSession.php" method="post">
+                    <input type="hidden" id="sessionModEdit" name="edit" value="">
+                    <input type="hidden" id="sessionModId" name="id" value="">
+                    <input type="submit" id="sessionMod" value="">
+                </form>
             </div>
         </div>
 
         <div id="sidebarCreateSession">
-            <button type="button" id="sessionCreate">Create Session</button>
+            <a href="createSession.php" class="button">Create Session</a>
         </div>
     </main>
 

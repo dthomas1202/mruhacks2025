@@ -57,6 +57,9 @@ flex-direction: column;
 align-items: flex-start;
 gap: var(--sds-size-space-200);
 }
+#username {
+    width: 388px;
+}
 
 button{
     display: flex;
