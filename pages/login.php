@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once "/include/linkDB.php";
+require_once "./include/linkDB.php";
 
 $message = "";
 // -----------LOGOUT LINK-------
@@ -10,7 +10,7 @@ $message = "";
 // -----THIS IS THE HEADER FOR ALL PROTECTED PAGES-----
 // session_start();
 // require_once "linkDB.php";
-// if (!isset($_SESSION["user"])) {
+// if (!isset($_SESSION["userName"])) {
 //     header("Location: login.php");
 //     exit;
 // }
@@ -29,7 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($db->checkPwd($username, $password)) {
             $userid = $db->getUserID($username);
             $user = $db->getUsers($userid);
-            $_SESSION["user"] = $username;
+            $_SESSION = $user;
+            $_SESSION["userName"] = $username;
             // Where we send people successful login
             header("Location: dashboard.php");
             exit;
