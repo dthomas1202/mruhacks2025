@@ -17,6 +17,8 @@
     <?php require("static/header.php");?>
 
     <main>
+        <div id="map"></div>
+
         <div id="sidebar">
             <div id="sidebarInit">
                 <h3>Please Select a Session in the Map</h3>
@@ -51,7 +53,10 @@
                 <button type="button" id="sessionLeave">Leave</button>
             </div>
         </div>
-        <div id="map"></div>
+
+        <div id="sidebarCreateSession">
+            <button type="button" id="sessionCreate">Create Session</button>
+        </div>
     </main>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>

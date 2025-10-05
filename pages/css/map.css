@@ -1,17 +1,21 @@
 html, body {
     width: 100%;
-    height: 100%;
-}
-
-body {
-    display: flex;
-    flex-direction: column;
+    height: 100vh;
 }
 
 main {
-    flex-grow: 1;
+    height: 93vh;
     display: grid;
-    grid-template-columns: 30vw auto;
+    grid-template-columns: auto 30vw;
+    grid-template-rows: auto 10vh;
+}
+
+#map {
+    grid-row: 1 / span 2;
+}
+
+#sidebar {
+    overflow-y: scroll;
 }
 
 .sessionCard {
@@ -70,6 +74,14 @@ main {
 
 #sidebarInfo button {
     display: block;
+}
+
+#sidebarCreateSession {
+    background-color: #DDD;
+}
+
+#sidebarCreateSession button {
+    
 }
 
 #sessionJoin {

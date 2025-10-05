@@ -50,7 +50,7 @@ function registerMapSession(id, lat, lng) {
 
     marker.on("click", () => { // Only if clicked when not in group
         console.log("Clicked marker ID #" + marker.customData[0]);
-        //TODO
+        markerClick(marker.customData)
     });
 
     markers.addLayer(marker);
@@ -90,13 +90,18 @@ function tConvert(time) {
   return time.join (''); // return adjusted time or original string
 }
 
-function updateSelectedMarkers() {
-    clusterMarkers.forEach((marker, _) => {
-        marker.setStyle({fillColor: 'red'});
+function updateSelectedMarkers(activeIds) {
+    markers.getLayers().forEach((marker, _) => {
+        if (activeIds.includes(marker.customData[0])) {
+            marker.setStyle({color: "red", fillColor: 'red'}); // Selected
+        } else {
+            marker.setStyle({color: "green", fillColor: 'green'});
+        }
+        
     });
 }
 
-async function queryCardsInfo(id) {
+function queryCardsInfo(id) {
     let cardDiv = document.createElement("div");
     cardDiv.className = "sessionCard";
     cardDiv.setAttribute("sessionID", id);
@@ -156,13 +161,24 @@ async function queryCardsInfo(id) {
 
 function clusterClick(data) {
     // data: array of [id]
-    id = data[0];
     setDisplaySidebar(false, true, false);
     document.getElementById("sidebarCards").innerHTML = "";
 
-    data.forEach((customData, ) => {
+    activeIds = [];
+    data.forEach((customData, _) => {
         queryCardsInfo(customData[0]);
+        activeIds.push(customData[0])
     });
+
+    updateSelectedMarkers(activeIds)
+}
+
+function markerClick(data) {
+    // data: [id]
+    setDisplaySidebar(false, false, true);
+    document.getElementById("sidebarCards").innerHTML = "";
+
+    updateSelectedMarkers([data[0]])
 }
 
 // Add OpenStreetMap tiles
@@ -180,7 +196,7 @@ markers.on("clusterclick", (event) => {
     const clusterMarkers = event.layer.getAllChildMarkers();
     const clusterData = clusterMarkers.map((m) => m.customData);
 
-    console.log("Cluster clicked IDs", clusterData[0]);
+    console.log("Cluster clicked IDs", clusterData);
     clusterClick(clusterData);
 });
 
