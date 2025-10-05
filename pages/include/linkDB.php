@@ -296,9 +296,9 @@ public function checkPwd($name, $password){
                 ':eTime' => $endTime
             
             ]);
-            return;
+            return ["success" => true, "id" => $this->pdo->lastInsertId()];
         } catch (PDOException $e) {
-            echo $e->getMessage();
+            return ["error" => $e->getMessage()];
         }
     }
 

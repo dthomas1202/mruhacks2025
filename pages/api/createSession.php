@@ -17,8 +17,10 @@ function gpd($name) {
 }
 
 if (pis("long") && pis("lat") && pis("subject") && pis("traffic") && pis("desc") && pis("sTime") && pis("eTime")) {
-    $db->createSession(gpd("long"), gpd("lat"), gpd("subject"), gpd("traffic"), gpd("desc"), $_SESSION["userID"], gpd("sTime"), gpd("eTime"));
+    $ret = $db->createSession(gpd("long"), gpd("lat"), gpd("subject"), gpd("traffic"), gpd("desc"), $_SESSION["userID"], gpd("sTime"), gpd("eTime"));
 
+    if (isset($ret["id"]))
+    $db->joinSession($_SESSION["userID"], $ret["id"]);
 }
 
 

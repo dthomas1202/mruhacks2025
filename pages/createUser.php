@@ -26,7 +26,7 @@
             <lable>Traffic Light</lable>
             <div class="lights">
                 <div class="greenLight">
-                    <input required type="radio" value="0" name="traffic" onclick="setFocusDisplay(true, false, false);">
+                    <input required type="radio" value="2" name="traffic" onclick="setFocusDisplay(true, false, false);">
                     <span class="light" id="green"></span>
                 </div>
                 <div class="yellowLight">
@@ -34,7 +34,7 @@
                     <span class="light"></span>
                 </div>
                 <div class="redLight">
-                    <input required type="radio" value="2" id="red" name="traffic" onclick="setFocusDisplay(false, false, true);">
+                    <input required type="radio" value="0" id="red" name="traffic" onclick="setFocusDisplay(false, false, true);">
                     <span class="light"></span>
                 </div>
             </div>

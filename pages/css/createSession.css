@@ -228,6 +228,7 @@ form {
 /* Placeholder */
 #map {
     height: 15.4375rem;
+    width: 100%;
     border: 3px #D7D7D7;
 }
 
