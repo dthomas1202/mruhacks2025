@@ -19,7 +19,7 @@
     <main>
         <div id="map"></div>
 
-        <div id="sidebar">
+        <div id="sidebar" onmouseleave="unzoomMarker()">
             <div id="sidebarInit">
                 <h3>Please Select a Session in the Map</h3>
             </div>
@@ -44,11 +44,11 @@
                 </div> -->
             </div>
             <div id="sidebarInfo">
-                <p>Username</p>
-                <p>Subject</p>
-                <p>Time</p>
-                <p><span class="trafficRed"></span> - Locked In</p>
-                <p>Description</p>
+                <p id="infoUser">Username</p>
+                <p id="infoSubject">Subject</p>
+                <p id="infoTime">Time</p>
+                <p id="infoTraffic"><span class="trafficRed"></span> - Locked In</p>
+                <p id="infoDesc">Description</p>
                 <button type="button" id="sessionJoin">Join</button>
                 <button type="button" id="sessionLeave">Leave</button>
             </div>
