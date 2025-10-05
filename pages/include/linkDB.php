@@ -75,7 +75,7 @@ if ($action === 'create') {
                 ':userSubject' => $userSubject,
                 ':userSkills' => $userSkills,
                 ':preferredTraffic' => $preferredTraffic,
-                ':preferredTimes' => $preferredTimes
+                ':preferredTimes' => $preferredTimes,
                 ':session' => 0]);
             return ["success" => true, "id" => $this->pdo->lastInsertId()];
         } catch (PDOException $e) {
