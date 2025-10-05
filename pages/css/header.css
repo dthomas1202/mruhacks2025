@@ -7,8 +7,9 @@ header {
     align-items: center;
 }
 
-p, a {
-    color: #000;
+p,
+a {
+    color: #1B3B08;
     font-family: "Inter", sans-serif;
     font-size: 0.9375rem;
     font-style: normal;
@@ -19,11 +20,25 @@ p, a {
 
 .leftHeader {
     display: flex;
-    width: 23.75rem;
-    padding: 1.75rem 0 1.75rem 0.875rem;
     align-items: center;
-    gap: 3.125rem;
-    flex-shrink: 0;
+    gap: 8%;
+}
+
+.leftHeader a {
+    display: flex;
+    padding: 0.625rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+}
+
+.leftHeader a:hover {
+    border-radius: 0.9375rem;
+    background: #E0E5D7;
+}
+
+.logo:hover{
+    background: white;
 }
 
 /* div */
@@ -53,7 +68,7 @@ p, a {
 }
 
 #login:hover {
-    background-color: #f1f1f1;
+    background-color: #E0E5D7;
 }
 
 #signup {
