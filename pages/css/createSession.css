@@ -1,0 +1,61 @@
+.lights {
+    display: flex;
+    width: 18.5625rem;
+    /* height: 5.4375rem; */
+    padding: 1.3125rem 2.5rem;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 0.625rem;
+    border: 3px solid #D7D7D7;
+    /* background: #FFF; */
+}
+
+.lights div {
+    display: flex;
+}
+
+.lights input {
+    position: absolute;
+    opacity: 50%;
+    width: 3.2rem;
+    height: 3.2rem;
+}
+
+/* Traffic light circle */
+.lights span {
+    width: 2.8125rem;
+    height: 2.8125rem;
+    border-radius: 2.8125rem;
+    display: block;
+}
+
+.greenLight span {
+    border: 6px solid #80A861;
+}
+
+.greenLight:hover > span, lights {
+    background-color: #80A861;
+}
+
+
+
+/* .lights input:checked~.greenLight span {
+    background-color: #80A861;
+} */
+
+.yellowLight span {
+    border: 6px solid #FFDF53;
+
+}
+
+.redLight span {
+    border: 6px solid #F55C5C;
+
+
+}
+
+
+#yellow {}
+
+#red {}
