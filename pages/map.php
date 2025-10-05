@@ -1,5 +1,10 @@
 <?PHP
-
+session_start();
+require_once "./include/linkDB.php";
+if (!isset($_SESSION["userName"])) {
+    header("Location: login.php");
+    exit;
+}
 ?>
 
 <!DOCTYPE html>

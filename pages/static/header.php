@@ -15,6 +15,6 @@
         <div class="rightHeader">
             <a id="login" href="login.php">Log in</a>
             <a id="signup" href="createUser.php">Sign up</a>
-            <a id="logout" href="">Log out</a>
+            <a id="logout" href="logout.php">Log out</a>
         </div>
     </header>
