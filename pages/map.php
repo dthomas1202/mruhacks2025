@@ -3,7 +3,7 @@ session_start();
 require_once "./include/linkDB.php";
 $dbPath = '../database/link.db';
 if (!isset($_SESSION["userName"])) {
-    header("Location: login.php");
+    header("Location: index.php");
     exit;
 }
 

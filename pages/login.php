@@ -47,11 +47,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <!DOCTYPE html>
 <html lang="en">
 <head>
+        <?php require("static/head.php");?>
+
     <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" href="css/signin.css">
 </head>
 <body>
+        <?php require("static/header.php");?>
+
     <h1>TeleLink</h1>
     <p>
         Log into TeleLink
