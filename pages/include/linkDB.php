@@ -99,11 +99,11 @@ if ($action === 'create') {
     public function getUsers($id = null) {
         try {
             if ($id !== null) {
-                $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
+                $stmt = $this->pdo->prepare("SELECT * FROM users WHERE userID = :id");
                 $stmt->execute([':id' => intval($id)]);
                 return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
             } else {
-                $stmt = $this->pdo->query("SELECT * FROM users ORDER BY id ASC");
+                $stmt = $this->pdo->query("SELECT * FROM users ORDER BY userID ASC");
                 return $stmt->fetchAll(PDO::FETCH_ASSOC);
             }
         } catch (PDOException $e) {
