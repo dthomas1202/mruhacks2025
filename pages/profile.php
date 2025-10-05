@@ -65,7 +65,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
         <?php require("static/header.php");?>
 
-    <h1>TeleLink Profile</h1>
+    <h1>FriendLink Profile</h1>
     <p>Hello <?=$_SESSION['userName'];?></p>
     <p>
         Your preferred traffic: <?=$_SESSION['preferredTraffic'];?>
@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <p> Your subjects: <?=$_SESSION['userSubject'];?> </p>
     <p> Your skills: <?$_SESSION['userSkills'];?></p>
     <p> Your preferred study times: <?=$_SESSION['preferredTimes'];?></p>
-
+    <img src='./images/profile.png'>
 
 
 
